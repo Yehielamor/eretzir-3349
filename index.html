@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EretzIr | Hebrew Country, City Word Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark-bg: #0f172a;
+            --dark-card: rgba(30, 41, 59, 0.7);
+            --light-text: #f8fafc;
+            --light-text-secondary: #cbd5e1;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--light-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--glass);
+            border-color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--light-text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        /* Features Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--light-text-secondary);
+        }
+
+        /* Social Proof */
+        .testimonials {
+            background: var(--dark-card);
+            border-radius: 24px;
+            padding: 60px;
+            margin-top: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 32px;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--light-text-secondary);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+        }
+
+        .author-info p {
+            color: var(--light-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+            opacity: 0.7;
+        }
+
+        .logo-item {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light-text-secondary);
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 40px 32px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 24px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--light-text-secondary);
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 32px 0;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            color: var(--light-text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .copyright {
+            color: var(--light-text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--light-text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .testimonials {
+                padding: 40px 24px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Eretz<span>Ir</span></a>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#pricing">Pricing</a>
+                <a href="auth.html" class="btn btn-secondary">Sign In</a>
+                <a href="auth.html" class="btn btn-primary">Get Started Free</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Challenge Your Hebrew Vocabulary in Real-Time</h1>
+            <p>EretzIr is the ultimate multiplayer word game for Hebrew speakers. Compete with friends, expand your vocabulary, and climb the leaderboards in this modern twist on the classic 'Country, City' game.</p>
+            <div class="hero-btns">
+                <a href="auth.html" class="btn btn-primary">Play Free Now</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Live Multiplayer Rooms</h3>
+                    <p>Join or create game rooms with friends or players worldwide. Real-time WebSocket sync ensures seamless gameplay with instant updates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Hebrew Dictionary API</h3>
+                    <p>Every word is validated against a comprehensive Hebrew dictionary. Ensures fair play and helps you learn correct spellings and meanings.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Leaderboards & Stats</h3>
+                    <p>Track your progress with persistent statistics, earn achievements, and compete for the top spot on global and friend leaderboards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Fully Customizable</h3>
+                    <p>Tailor each game with custom categories, time limits, and scoring rules. Create the perfect challenge for any skill level.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Loved by Hebrew Speakers</h2>
+            <div class="testimonials">
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"EretzIr brought our family together during the holidays. The competitive yet educational gameplay is perfect for all ages. The dictionary integration is a game-changer!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">TD</div>
+                            <div class="author-info">
+                                <h4>Tal David</h4>
+                                <p>Hebrew Teacher, Tel Aviv</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"As a game developer, I'm impressed by the smooth real-time multiplayer. It's rare to find a Hebrew game with this level of polish and technical execution."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">NS</div>
+                            <div class="author-info">
+                                <h4>Noa Shalev</h4>
+                                <p>Game Developer, Herzliya</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"My vocabulary has improved dramatically since playing EretzIr daily. The competitive element makes learning addictive. The premium features are worth every shekel."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">YL</div>
+                            <div class="author-info">
+                                <h4>Yaron Levi</h4>
+                                <p>Marketing Director, Jerusalem</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="logos">
+                    <div class="logo-item">ישראל היום</div>
+                    <div class="logo-item">הארץ</div>
+                    <div class="logo-item">גלובס</div>
+                    <div class="logo-item">ynet</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">₪0<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Basic game rooms (up to 4 players)</li>
+                        <li>Standard categories</li>
+                        <li>Public leaderboard access</li>
+                        <li>Basic word validation</li>
+                        <li>Ad-supported experience</li>
+                    </ul>
+                    <a href="auth.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Get Started</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Pro</h3>
+                    <div class="price">₪29<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Advanced game rooms (up to 12 players)</li>
+                        <li>Custom categories & time limits</li>
+                        <li>Advanced statistics & insights</li>
+                        <li>Full dictionary access & definitions</li>
+                        <li>Ad-free experience</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="auth.html" class="btn btn-primary" style="width: 100%; text-align: center;">Upgrade to Pro</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited players & rooms</li>
+                        <li>White-label branding</li>
+                        <li>Custom category packs</li>
+                        <li>Dedicated server instance</li>
+                        <li>API access for integration</li>
+                        <li>24/7 dedicated support</li>
+                    </ul>
+                    <a href="auth.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="logo">Eretz<span>Ir</span></a>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="copyright">© 2026 EretzIr. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
